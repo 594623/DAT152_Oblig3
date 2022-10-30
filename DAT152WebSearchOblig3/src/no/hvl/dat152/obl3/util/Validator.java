@@ -22,4 +22,25 @@ public class Validator {
 		}
 		return null;
 	}
+
+	public static boolean validPassword(String password){
+		boolean valid = true;
+		if(password.length() < 8){
+			valid = false;
+		}
+		String upperCase = "(.*[A-Z].*)";
+		if(!password.matches(upperCase)){
+			valid = false;
+		}
+		String numbers = "(.*[0-9].*)";
+		if(!password.matches(numbers)){
+			valid = false;
+		}
+		String space = "(.*[   ].*)";
+		if(password.matches(space)){
+			valid = false;
+		}
+		return valid;
+	}
+
 }

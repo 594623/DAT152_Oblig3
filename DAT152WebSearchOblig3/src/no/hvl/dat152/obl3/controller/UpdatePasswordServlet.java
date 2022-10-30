@@ -46,7 +46,7 @@ public class UpdatePasswordServlet extends HttpServlet {
 			
 			AppUserDAO userDAO = new AppUserDAO();
 			
-			if (passwordnew.equals(confirmedPasswordnew)){
+			if (passwordnew.equals(confirmedPasswordnew) && Validator.validPassword(passwordnew)){
 				
 				successfulPasswordUpdate = userDAO.updateUserPassword(user.getUsername(), passwordnew);
 				
@@ -61,7 +61,11 @@ public class UpdatePasswordServlet extends HttpServlet {
 							response);
 				}
 			} else {
-				request.setAttribute("message", "Password fields do not match. Try again!");
+				if (passwordnew.equals(confirmedPasswordnew)) {
+					request.setAttribute("message", "Passwords must be at least 8 characters long, contain one capital letter, one number and cannot have spaces");
+				} else {
+					request.setAttribute("message", "passwords must match");
+				}
 				request.getRequestDispatcher("updatepassword.jsp").forward(request,
 						response);
 			}

@@ -19,6 +19,7 @@ import no.hvl.dat152.obl3.util.Validator;
 @WebServlet("/newuser")
 public class NewUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String message = "Passwords must match, be at least 8 characters long, contain one capital letter, one number and cannot have spaces";
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -47,7 +48,7 @@ public class NewUserServlet extends HttpServlet {
 				.getParameter("dicturl"));
 
 		AppUser user = null;
-		if (password.equals(confirmedPassword)) {
+		if (password.equals(confirmedPassword) && Validator.validPassword(password)) {
 
 			AppUserDAO userDAO = new AppUserDAO();
 
@@ -56,6 +57,9 @@ public class NewUserServlet extends HttpServlet {
 					Crypto.generateRandomCryptoCode());						
 
 			successfulRegistration = userDAO.saveUser(user);
+			if(!successfulRegistration){
+				message = "database error";
+			}
 		}
 
 		if (successfulRegistration) {
@@ -67,7 +71,7 @@ public class NewUserServlet extends HttpServlet {
 			response.sendRedirect("searchpage");
 
 		} else {
-			request.setAttribute("message", "Registration failed!");
+			request.setAttribute("message", message);
 			request.getRequestDispatcher("newuser.jsp").forward(request,
 					response);
 		}
