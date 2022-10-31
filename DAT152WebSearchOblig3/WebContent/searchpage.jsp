@@ -11,6 +11,7 @@
 	<h3>Main search page</h3>
 	<p><a href="mydetails">My personal details and search history</a></p>
 	<form action="dosearch" method="get">
+        <input type="hidden" name="anticsrf" value="${anticsrf}">
 		<input type="hidden" name="user" value="${user.username}" /> 
 		<p>Dictionary search (enter word, e.g. Car): 
 			<input type="text" name="searchkey" required pattern="^[a-zæøåA-ZÆØÅ]+$"/>

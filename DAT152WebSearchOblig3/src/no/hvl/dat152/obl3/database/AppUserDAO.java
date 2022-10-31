@@ -1,10 +1,13 @@
 package no.hvl.dat152.obl3.database;
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 import no.hvl.dat152.obl3.util.Crypto;
 
@@ -235,5 +238,12 @@ public class AppUserDAO {
 	    return false;
   }
 
+  //CSRF
+  public String generateAntiCsrf() {
+      SecureRandom randomToken = new SecureRandom();
+      byte bytetab[] = new byte[30];
+      randomToken.nextBytes(bytetab);
+      return DigestUtils.md5Hex(bytetab);
+  }
 }
 

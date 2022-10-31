@@ -69,14 +69,48 @@ public class LoginServlet extends HttpServlet {
 			handleLoginLogic(request, response, client_id);
 			
 		} else { /* otherwise, log in the user */ 
-			boolean successfulLogin = login(request, response);
+			
+			boolean successfulLogin = false;
+
+			String username = Validator.validString(request.getParameter("username"));
+			String password = Validator.validString(request.getParameter("password"));
+
+			if (username != null && password != null) {
+	
+				AppUserDAO userDAO = new AppUserDAO();
+				AppUser authUser = userDAO.getAuthenticatedUser(username, password);
+				
+				//CSRF - Creating token on login of user
+				if (authUser != null) {
+					successfulLogin = true;
+					request.getSession().setAttribute("user", authUser);
+					request.getSession().setAttribute("anticsrf", userDAO.generateAntiCsrf());
+					
+					System.out.println("Generated CSRF Token for USER " + authUser);
+					request.getSession().setAttribute("updaterole", "");
+	
+					//Admin
+					if (authUser.getRole().equals(Role.ADMIN.toString())) {
+						List<String> usernames = userDAO.getUsernames();
+						request.getSession().setAttribute("usernames", usernames);
+						request.getSession().setAttribute("anticsrf", userDAO.generateAntiCsrf());
+						
+							if (authUser.getRole().equals(Role.ADMIN.toString())) {
+									System.out.println("Generated CSRF Token for ADMIN " + authUser);
+							}
+							request.getSession().setAttribute("updaterole", "<a href=\"updaterole.jsp\">Update Role</a>");
+							}
+					} else {
+						response.sendRedirect("login");
+						return;
+				}
+			}
 
 			if (successfulLogin) {
 				
 				handleLoginLogic(request, response, client_id);
 				
 			} else {
-				String username = Validator.validUsername(request.getParameter("username"));
 				request.setAttribute("message", "Username " + username + ": Login failed!..");
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}

@@ -43,6 +43,17 @@ public class UpdateRoleServlet extends HttpServlet {
 		
 		AppUser user = (AppUser) request.getSession().getAttribute("user");
 		
+		//CSRF for updaterole
+		if (Validator.csrfValidity(request)) {
+            request.getSession().invalidate();
+            request.setAttribute("message", "CSRF tokens did not match, no hackiehackie!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            
+            System.out.println("CSRF Tokensdid NOT Match!");
+        } else {
+            System.out.println("CSRF Token DOES Match!");
+        }
+		
 		if(username != null) {
 			
 			if (RequestHelper.isLoggedIn(request) && user.getRole().equals(Role.ADMIN.toString())) {

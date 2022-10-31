@@ -10,6 +10,7 @@
 	<h3>Log in</h3>
 	<p><font color="red">${message}</font></p>
 	<form action="login" method="post">
+        <input type="hidden" name="anticsrf" value="${anticsrf}">
 		<p>Username <input type="text" name="username" value="${username}" required pattern="^[a-zæøåA-ZÆØÅ0-9]+$ "/></p>
 		<p>Password <input type="password" name="password" value="${password}"/></p>
 		<input type="hidden" name="client_id" value="${client_id}"/>

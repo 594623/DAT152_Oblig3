@@ -62,4 +62,16 @@ public class Validator {
 		}
 	}
 
+	//CSRF
+	public static boolean csrfValidity(HttpServletRequest r) {
+        String a = "";
+        try {
+            a = (String) r.getSession().getAttribute("anticsrf");
+        } catch (NullPointerException e) {
+            return true;
+        	}
+        String b = r.getParameter("anticsrf");
+        return !a.equals(b);
+    }
+	
 }
