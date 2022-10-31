@@ -38,11 +38,11 @@ public class NewUserServlet extends HttpServlet {
 				.getParameter("password"));
 		String confirmedPassword = Validator.validString(request
 				.getParameter("confirm_password"));
-		String firstName = Validator.validString(request
+		String firstName = Validator.validUsername(request
 				.getParameter("first_name"));
-		String lastName = Validator.validString(request
+		String lastName = Validator.validUsername(request
 				.getParameter("last_name"));
-		String mobilePhone = Validator.validString(request
+		String mobilePhone = Validator.validPhone(request
 				.getParameter("mobile_phone"));
 		String preferredDict = Validator.validString(request
 				.getParameter("dicturl"));

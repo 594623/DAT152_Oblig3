@@ -15,9 +15,9 @@
 		<p>Username <input type="text" name="username" required pattern="^[a-zæøåA-ZÆØÅ0-9]+$"/></p>
 		<p>Password <input type="password" name="password" /></p>
 		<p>Confirm Password <input type="password" name="confirm_password" /></p>
-		<p>First Name <input type="text" name="first_name" /></p>
-		<p>Last Name <input type="text" name="last_name" /></p>
-		<p>Mobile Phone <input type="text" name="mobile_phone" /></p>
+		<p>First Name <input type="text" name="first_name" required pattern="^[a-zæøåA-ZÆØÅ]+$"/></p>
+		<p>Last Name <input type="text" name="last_name" required pattern="^[a-zæøåA-ZÆØÅ]+$"/></p>
+		<p>Mobile Phone <input type="text" name="mobile_phone" required pattern="^[0-9]+$"/></p>
 		<p><b>Preferred Dictionary Source for this computer</b><br>
 			<input type="radio" name="dicturl" value="${dictconfig}" checked="checked"/>http://localhost... (Norway)<br>
 			<input type="radio" name="dicturl" value="http://www.mso.anu.edu.au/~ralph/OPTED/v003/"/>http://www.mso.anu.edu.au... (Australia)

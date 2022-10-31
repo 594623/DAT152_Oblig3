@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
 			
 			boolean successfulLogin = false;
 
-			String username = Validator.validString(request.getParameter("username"));
+			String username = Validator.validUsername(request.getParameter("username"));
 			String password = Validator.validString(request.getParameter("password"));
 
 			if (username != null && password != null) {
@@ -111,6 +111,7 @@ public class LoginServlet extends HttpServlet {
 				handleLoginLogic(request, response, client_id);
 				
 			} else {
+				
 				request.setAttribute("message", "Username " + username + ": Login failed!..");
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}

@@ -74,4 +74,14 @@ public class Validator {
         return !a.equals(b);
     }
 	
+	public static String validPhone(String username) {
+		String regex = "^[0-9]+$";
+		
+		if(username.matches(regex) && username != null) {
+			return username;
+		} else {
+			return "Error, invalid username";
+		}
+	}
+	
 }
