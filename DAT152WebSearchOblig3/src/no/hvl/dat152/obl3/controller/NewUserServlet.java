@@ -32,7 +32,7 @@ public class NewUserServlet extends HttpServlet {
 
 		boolean successfulRegistration = false;
 
-		String username = Validator.validString(request
+		String username = Validator.validUsername(request
 				.getParameter("username"));
 		String password = Validator.validString(request
 				.getParameter("password"));

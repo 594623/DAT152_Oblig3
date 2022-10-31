@@ -12,7 +12,7 @@
 	<p><font color="red">${message}</font></p>
 	<form method="post">
     <input type="hidden" name="anticsrf" value="${anticsrf}">
-		<p>Username <input type="text" name="username" /></p>
+		<p>Username <input type="text" name="username" required pattern="^[a-zæøåA-ZÆØÅ0-9]+$"/></p>
 		<p>Password <input type="password" name="password" /></p>
 		<p>Confirm Password <input type="password" name="confirm_password" /></p>
 		<p>First Name <input type="text" name="first_name" /></p>
