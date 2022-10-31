@@ -18,6 +18,7 @@ import no.hvl.dat152.obl3.idp.oauth.utility.OpenIDUser;
 import no.hvl.dat152.obl3.util.Role;
 import no.hvl.dat152.obl3.util.ServerConfig;
 import no.hvl.dat152.obl3.util.TokenSingleton;
+import no.hvl.dat152.obl3.util.Validator;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -75,7 +76,7 @@ public class LoginServlet extends HttpServlet {
 				handleLoginLogic(request, response, client_id);
 				
 			} else {
-				String username = request.getParameter("username");
+				String username = Validator.validUsername(request.getParameter("username"));
 				request.setAttribute("message", "Username " + username + ": Login failed!..");
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}

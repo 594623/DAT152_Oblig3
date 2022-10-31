@@ -51,5 +51,15 @@ public class Validator {
 		}
 		return valid;
 	}
+	
+	public static String validUsername(String username) {
+		String regex = "^[a-zæøåA-ZÆØÅ0-9]+$";
+		
+		if(username.matches(regex) && username != null) {
+			return username;
+		} else {
+			return "Error, invalid username";
+		}
+	}
 
 }
