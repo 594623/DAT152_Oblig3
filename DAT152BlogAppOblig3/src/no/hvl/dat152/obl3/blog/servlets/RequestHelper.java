@@ -9,8 +9,7 @@ import no.hvl.dat152.obl3.blog.tokens.JWTHandler;
 
 public class RequestHelper {
 
-	public static String getCookieValue(HttpServletRequest request,
-			String cookieName) {
+	public static String getCookieValue(HttpServletRequest request, String cookieName) {
 
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
@@ -22,9 +21,8 @@ public class RequestHelper {
 		}
 		return null;
 	}
-	
-	public static Cookie getCookie(HttpServletRequest request,
-			String cookieName) {
+
+	public static Cookie getCookie(HttpServletRequest request, String cookieName) {
 
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
@@ -36,19 +34,21 @@ public class RequestHelper {
 		}
 		return null;
 	}
-	
+
 	public static boolean isLoggedIn(HttpServletRequest request) {
 		return request.getSession().getAttribute("user") != null;
 	}
-	
+
 	public static boolean isLoggedInSSO(HttpServletRequest request, String keypath) {
 		String id_token = RequestHelper.getCookieValue(request, "id_token");
 		doJWT(request, id_token);
-		
-		return JWTHandler.verifyJWT(id_token, keypath);
-		
+		// Getting path to IdP keys, the rest of the path is in the method
+		// verifyJWTSignature
+		String idp_webpath = "http://localhost:" + Constants.IDP_PORT + "/" + Constants.IDP_PATH + "/WEB-INF/";
+		return JWTHandler.verifyJWT(id_token, keypath) && JWTHandler.verifyJWTSignature(id_token, idp_webpath);
+
 	}
-	
+
 	public static void doJWT(HttpServletRequest request, String id_token) {
 		JWT jwt = JWTHandler.getJWT(id_token);
 		String role = jwt.getRole();
