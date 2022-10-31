@@ -13,7 +13,7 @@
 	<form action="dosearch" method="get">
 		<input type="hidden" name="user" value="${user.username}" /> 
 		<p>Dictionary search (enter word, e.g. Car): 
-			<input type="text" name="searchkey" />
+			<input type="text" name="searchkey" required pattern="^[a-zæøåA-ZÆØÅ]+$"/>
 			<input type="submit" value="Go!"/></p>
 	</form>
 	<p><b>Last 5 searches done by anyone (Only visible to super Admins)</b></p>

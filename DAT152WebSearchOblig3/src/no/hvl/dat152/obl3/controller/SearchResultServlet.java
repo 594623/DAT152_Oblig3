@@ -23,8 +23,9 @@ public class SearchResultServlet extends HttpServlet {
 
 	private static final String DEFAULT_DICT_URL = "";
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		if (RequestHelper.isLoggedIn(request)) {
 
@@ -34,12 +35,11 @@ public class SearchResultServlet extends HttpServlet {
 			}
 
 			String user = Validator.validString(request.getParameter("user"));
-			String searchkey = Validator.validString(request
-					.getParameter("searchkey"));
+			String searchkey = Validator.validInput(request.getParameter("searchkey"));
 
 			Timestamp datetime = new Timestamp(new Date().getTime());
 			SearchItem search = new SearchItem(datetime, user, searchkey);
-			
+
 			SearchItemDAO searchItemDAO = new SearchItemDAO();
 			searchItemDAO.saveSearch(search);
 			DictionaryDAO dict = new DictionaryDAO(dicturl);
@@ -54,12 +54,10 @@ public class SearchResultServlet extends HttpServlet {
 
 			request.setAttribute("searchkey", searchkey);
 			request.setAttribute("result", foundEntries);
-			request.getRequestDispatcher("searchresult.jsp").forward(request,
-					response);
+			request.getRequestDispatcher("searchresult.jsp").forward(request, response);
 		} else {
 			request.getSession().invalidate();
-			request.getRequestDispatcher("index.jsp").forward(request,
-					response);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 	}
 
